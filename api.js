@@ -1,6 +1,4 @@
 var DBOperations = require('./DBOperations');
-var city = require('./City');
-
 var express = require('express');
 var bodyparser = require('body-parser');
 var cors = require('cors');
