@@ -26,8 +26,19 @@ router.route('/Kservices').get((request,response)=>{
     } )    
 })   
 
+
+router.route('/Kservice/:KServicesID').get((request,response)=>{
+    DBOperations.getService(request.params.KServicesID).then(result => {
+        console.log('Kservice Works!!!!!!!!!!!!!!!!!!!!');          
+        //response = {a:1};
+        response.send(result[0]);
+        //console.log((result[0])); 
+     
+    } )    
+})   
+
 router.route('/Kservices/del/:KServicesID').get((request,response)=>{
-    console.log(request.params.KServicesID);
+    //console.log(request.params.KServicesID);
     DBOperations.DelService(request.params.KServicesID).then(result => {
         //response = {a:1};
         response.send(result[0]);
@@ -54,8 +65,24 @@ router.route('/Kservices').post((request,response)=>{
     console.log("requestrequestrequest")
     console.log(request.body)
     DBOperations.AddService(
-        request.body.cod,
-        request.body.Servis_Name,
+        request.body.C_KService,
+        request.body.N_KService,
+        request.body.Required_Session,
+        request.body.Price
+        ).then(result => {
+        //response = {a:1};
+        response.send({msg : "ok"});
+        //console.log((result[0]));        
+    } )    
+})
+
+router.route('/Kservices/:KServicesID').put((request,response)=>{
+    console.log("TTTTTTTTTTTTTTTTTTTTTT")
+    console.log(request.body)
+    DBOperations.UpdateService(
+        request.body.Srl_KService,
+        request.body.C_KService,
+        request.body.N_KService,
         request.body.Required_Session,
         request.body.Price
         ).then(result => {

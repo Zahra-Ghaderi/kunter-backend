@@ -32,6 +32,24 @@ async function AddService(KServicesID, KServicesName, KServicesSession, KService
     }
 }
 
+async function UpdateService(SrlServices, KServicesID, KServicesName, KServicesSession, KServicesPrice){
+    console.log("UpdateService(KServicesID, KServicesName, KServicesSession, KServicesPrice)");
+    console.log("skhdgfjsfk");
+    try{
+        let pool = await sql.connect(config);
+        let ServisList = await pool.request()
+        .input('SrlServices', sql.Int, SrlServices)
+        .input('KServicesID', sql.Int, KServicesID)
+        .input('KServicesName', sql.VarChar, KServicesName)
+        .input('KServicesSession', sql.Int, KServicesSession)
+        .input('KServicesPrice', sql.Int, KServicesPrice)
+        .query('UPDATE T_KService SET C_KService=@KServicesID , N_KService = @KServicesName , Required_Session = @KServicesSession, Price = @KServicesPrice WHERE Srl_KService=@SrlServices');
+        return 1;
+    }catch(error){
+        console.log(error);
+    }
+}
+
 async function DelService(KServicesID){
     console.log("DelService(KServicesID)");
     console.log(KServicesID);
@@ -46,17 +64,17 @@ async function DelService(KServicesID){
     }
 }
  
-async function getService(SrvID){
+async function getService(KServicesID){
     try{
         console.log('ZZZZZZZZgetServiceZZZZZZZZZ');
         let pool = await sql.connect(config);
-        let Pationt = await pool.request()
-        .input('SrvID', sql.Int, SrvID)
-        .query('select  * from T_KService where Servis_Id = @SrvID');
-        console.log(3);
-        return Pationt.recordsets; 
+        let Servis = await pool.request()
+        .input('KServicesID', sql.Int, KServicesID)
+        .query('select  * from T_KService where Srl_KService = @KServicesID');
+        //console.log(Servis);
+        return Servis.recordsets; 
     }catch(error){
-        console.log(error);
+        console.log(Servis);
     }}
 
 async function getPationts(){
@@ -227,6 +245,7 @@ module.exports= {
     getServices : getServices,
     DelService : DelService,
     AddService : AddService,
+    UpdateService : UpdateService,
 
     getDocs : getDocs,
     DelDocs : DelDocs,
