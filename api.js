@@ -128,6 +128,23 @@ router.route('/Kservices/:KServicesID').put((request,response)=>{
     } )    
 })
 
+
+router.route('/Patients/:PatientID').put((request,response)=>{
+    console.log("TTTTTTTTTTTTTTTTTTTTTT")
+    console.log(request.body)
+    DBOperations.UpdatePatient(
+        request.body.Srl_Person,
+        request.body.C_Person,
+        request.body.N_Person,
+        request.body.F_Person
+        ).then(result => {
+        //response = {a:1};
+        response.send({msg : "ok"});
+        //console.log((result[0]));        
+    } )    
+})
+
+
 router.route('/Pationts/del/:PationtsID').get((request,response)=>{
     console.log('bbbbbbbbbbbbbbbbbb');
     DBOperations.DelPationts(request.params.PationtsID).then(result => {

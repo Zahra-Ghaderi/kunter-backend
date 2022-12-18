@@ -95,6 +95,28 @@ async function UpdateService(SrlServices, KServicesID, KServicesName, KServicesS
     }
 }
 
+
+
+async function UpdatePatient(Srl_Person, C_Person, N_Person, F_Person){
+    console.log("UpdatePatient(KServicesID, KServicesName, KServicesSession, KServicesPrice)");
+    console.log("skhdgfjsfk");
+    try{
+        let pool = await sql.connect(config);
+        let PatientList = await pool.request()
+        .input('Srl_Person', sql.Int, Srl_Person)
+        .input('C_Person', sql.Int, C_Person)
+        .input('N_Person', sql.VarChar, N_Person)
+        .input('F_Person', sql.Int, F_Person)
+       .query('UPDATE T_Person_List SET C_Person = @C_Person, N_Person = @N_Person, F_Person = @F_Person,  where  Srl_Person = @PationtsID');
+        return 1;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+
+
+
 async function DelService(KServicesID){
     console.log("DelService(KServicesID)");
     console.log(KServicesID);
@@ -210,6 +232,7 @@ module.exports= {
     getPatients : getPatients,
     DelPatient : DelPatient,
     AddPationt : AddPationt,
+    UpdatePatient : UpdatePatient,
 
     getService : getService,
     getServices : getServices,
