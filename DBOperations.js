@@ -19,7 +19,7 @@ async function getPatients(){
         //console.log(1);
         let pool = await sql.connect(config);
         //console.log(2);
-        let PationtsList = await pool.request().query('select top 2 Srl_Person, C_Person from T_Person_List');
+        let PationtsList = await pool.request().query('select Srl_Person, C_Person, N_Person, F_Person from T_Person_List');
         //console.log(PationtsList.recordsets);
         return PationtsList.recordsets;
     }catch(error){
@@ -45,6 +45,38 @@ async function AddService(KServicesID, KServicesName, KServicesSession, KService
     }
 }
 
+
+
+async function AddPationt(C_Person, N_Person, F_Person){
+    console.log("AddPationt(KServicesID, KServicesName, KServicesSession, KServicesPrice)");
+    console.log("skhdgfjsfk");
+    try{
+        let pool = await sql.connect(config);
+        let AddToPationt = await pool.request()
+        .input('C_Person', sql.Int, C_Person)
+        .input('N_Person', sql.VarChar, N_Person)
+        .input('F_Person', sql.VarChar, F_Person)      
+        .query('INSERT INTO T_Person_List(C_Person, N_Person, F_Person) values(@C_Person, @N_Person, @F_Person)');
+        
+    }catch(error){
+        console.log(error);
+    }
+}
+
+
+async function DelPatient(PationtsID){
+    console.log('bbbbbbbbbbbbbbbbbb');
+    console.log(PationtsID);
+    try{
+        let pool = await sql.connect(config);
+        let PatientList = await pool.request()
+        .input('PationtsID', sql.Int, PationtsID)
+        .query('DELETE FROM T_Person_List where  Srl_Person = @PationtsID');
+        return 1;
+    }catch(error){
+        console.log(error);
+    }
+}
 async function UpdateService(SrlServices, KServicesID, KServicesName, KServicesSession, KServicesPrice){
     console.log("UpdateService(KServicesID, KServicesName, KServicesSession, KServicesPrice)");
     console.log("skhdgfjsfk");
@@ -90,33 +122,6 @@ async function getService(KServicesID){
         console.log(Servis);
     }}
 
-async function DelPationts(PationtsID){
-    console.log('bbbbbbbbbbbbbbbbbb');
-    console.log(PationtsID);
-    try{
-        let pool = await sql.connect(config);
-        let ServisList = await pool.request()
-        .input('PationtsID', sql.Int, PationtsID)
-        .query('DELETE FROM T_Person_List where  id = @PationtsID; Select * From T_Person_List');
-        return ServisList.recordsets;
-    }catch(error){
-        console.log(error);
-    }
-}
-
-async function AddPationts(PationtsID){
-    console.log('bbbbbbbbbbbbbbbbbb');
-    console.log(PationtsID);
-    try{
-        let pool = await sql.connect(config);
-        let ServisList = await pool.request()
-        .input('PationtsID', sql.Int, PationtsID)
-        .query('INSERT INTO T_KService(Servis_Id) values(@PationtsID); Select * From T_KService');
-        return ServisList.recordsets;
-    }catch(error){
-        console.log(error);
-    }
-}
 
 async function getDocs(){
     try{
@@ -203,8 +208,8 @@ module.exports= {
   
     getPationt : getPationt,
     getPatients : getPatients,
-    DelPationts : DelPationts,
-    AddPationts : AddPationts,
+    DelPatient : DelPatient,
+    AddPationt : AddPationt,
 
     getService : getService,
     getServices : getServices,

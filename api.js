@@ -56,6 +56,16 @@ router.route('/Kservices/del/:KServicesID').get((request,response)=>{
     } )    
 }) 
  
+
+router.route('/Patients/:PatientID').delete((request,response)=>{
+    console.log(request.params);
+    DBOperations.DelPatient(request.params.PatientID).then(result => {
+        //response = {a:1};
+        response.send(result[0]);
+        //console.log((result[0]));        
+    } )    
+}) 
+
 {/*router.route('/Kservices/add/:KServicesID/:KServicesName/:KServicesSession/:KServicesPrice').get((request,response)=>{//
     console.log("request")
     console.log(request)
@@ -71,6 +81,21 @@ router.route('/Kservices/del/:KServicesID').get((request,response)=>{
     } )    
 })*/}
 
+router.route('/Patients').post((request,response)=>{
+    console.log("requestrequestrequest")
+    console.log(request.body)
+    DBOperations.AddPationt(
+        request.body.C_Person, 
+        request.body.N_Person,
+        request.body.F_Person
+        ).then(result => {
+        //response = {a:1};
+        response.send({msg : "ok"});
+        //console.log((result[0]));        
+    } )    
+})
+
+
 router.route('/Kservices').post((request,response)=>{
     console.log("requestrequestrequest")
     console.log(request.body)
@@ -85,6 +110,7 @@ router.route('/Kservices').post((request,response)=>{
         //console.log((result[0]));        
     } )    
 })
+
 
 router.route('/Kservices/:KServicesID').put((request,response)=>{
     console.log("TTTTTTTTTTTTTTTTTTTTTT")
