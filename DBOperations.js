@@ -14,6 +14,19 @@ async function getServices(){
     }
 }
 
+async function getPatients(){
+    try{
+        //console.log(1);
+        let pool = await sql.connect(config);
+        //console.log(2);
+        let PationtsList = await pool.request().query('select top 2 Srl_Person, C_Person from T_Person_List');
+        //console.log(PationtsList.recordsets);
+        return PationtsList.recordsets;
+    }catch(error){
+        console.log(error);
+    }
+}
+
 
 async function AddService(KServicesID, KServicesName, KServicesSession, KServicesPrice){
     console.log("AddService(KServicesID, KServicesName, KServicesSession, KServicesPrice)");
@@ -76,19 +89,6 @@ async function getService(KServicesID){
     }catch(error){
         console.log(Servis);
     }}
-
-async function getPationts(){
-    try{
-        console.log(1);
-        let pool = await sql.connect(config);
-        console.log(2);
-        let PationtsList = await pool.request().query('select * from T_Person_List');
-        console.log(PationtsList.recordsets);
-        return PationtsList.recordsets;
-    }catch(error){
-        console.log(error);
-    }
-}
 
 async function DelPationts(PationtsID){
     console.log('bbbbbbbbbbbbbbbbbb');
@@ -183,17 +183,8 @@ async function getDocVisits(){
     }
 }
 
-async function getCities(){
-try{
-    console.log(1);
-    let pool = await sql.connect(config);
-    console.log(2);
-    let cities = await pool.request().query('select TOP 4 FCODE, fname from T_City');
-    console.log(3);
-    return cities.recordsets;
-}catch(error){
-    console.log(error);
-}}
+
+
 
 async function getPationt(PationtID){
     try{
@@ -206,38 +197,12 @@ async function getPationt(PationtID){
     }catch(error){
         console.log(error);
     }}
-
-async function getPationt(PationtID){
-    try{
-        let pool = await sql.connect(config);
-        let Pationt = await pool.request()
-        .input('PationtID', sql.Int, PationtID)
-        .query('select Srl_Person, N_Person from T_Person_List where Srl_Person = 2179');
-        console.log(3);
-        return Pationt.recordsets;
-    }catch(error){
-        console.log(error);
-    }}
-    
-async function getPationt(PationtID){
-    try{
-        let pool = await sql.connect(config);
-        let Pationt = await pool.request()
-        .input('PationtID', sql.Int, PationtID)
-        .query('select Srl_Person, N_Person from T_Person_List where Srl_Person = 2179');
-        console.log(3);
-        return Pationt.recordsets;
-    }catch(error){
-        console.log(error);
-    }}
-        
-                        
+         
         
 module.exports= {
-    getCities : getCities,
-
+  
     getPationt : getPationt,
-    getPationts : getPationts,
+    getPatients : getPatients,
     DelPationts : DelPationts,
     AddPationts : AddPationts,
 

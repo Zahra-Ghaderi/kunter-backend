@@ -26,6 +26,16 @@ router.route('/Kservices').get((request,response)=>{
     } )    
 })   
 
+router.route('/Patients').get((request,response)=>{
+    DBOperations.getPatients().then(result => {
+        console.log('getPatients Works!!!!!!!!!!!!!!!!!!!!');          
+        
+        response.send(result[0]);
+        //console.log((result[0])); 
+     
+    } )    
+})   
+
 
 router.route('/Kservice/:KServicesID').get((request,response)=>{
     DBOperations.getService(request.params.KServicesID).then(result => {
@@ -92,13 +102,6 @@ router.route('/Kservices/:KServicesID').put((request,response)=>{
     } )    
 })
 
-router.route('/Pationts').get((request,response)=>{
-    console.log("Pationts?");
-    
-    DBOperations.getPationts().then(result => {
-        response.send(result[0]);     
-    } )    
-})
 router.route('/Pationts/del/:PationtsID').get((request,response)=>{
     console.log('bbbbbbbbbbbbbbbbbb');
     DBOperations.DelPationts(request.params.PationtsID).then(result => {
@@ -134,9 +137,6 @@ router.route('/srv/:SrvID').get((request,response)=>{
     } )    
 })
 
-
-router.route('/Pationts').get((request,response)=>{
-    DBOperations.getPationts().then(result => {response.send(result);})}) 
 
 router.route('/Pationt/:PationtID').get((request,response)=>{
     DBOperations.getPationt(request.params.PationtID).then(result => {response.send(result);})}) 
