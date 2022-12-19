@@ -58,6 +58,7 @@ async function AddPatient(C_Person, Mobile, N_Person, F_Person){
 
 async function UpdatePatient(Srl_Person, C_Person, Mobile, N_Person, F_Person){
     try{
+        console.log('aaaaaaaaUpdatePatientaaaaaaaaa');
         let pool = await sql.connect(config);
         let PatientList = await pool.request()
         .input('Srl_Person', sql.Int, Srl_Person)
@@ -65,7 +66,7 @@ async function UpdatePatient(Srl_Person, C_Person, Mobile, N_Person, F_Person){
         .input('Mobile', sql.VarChar, Mobile)
         .input('N_Person', sql.VarChar, N_Person)
         .input('F_Person', sql.Int, F_Person)
-       .query('UPDATE T_Person_List SET C_Person = @C_Person, Mobile = @Mobile, N_Person = @N_Person, F_Person = @F_Person,  where  Srl_Person = @PatientsID');
+       .query('UPDATE T_Person_List SET C_Person = @C_Person, Mobile = @Mobile, N_Person = @N_Person, F_Person = @F_Person  where  Srl_Person = @Srl_Person');
         return 1;
     }catch(error){
         console.log(error);
