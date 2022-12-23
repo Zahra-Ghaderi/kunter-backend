@@ -5,7 +5,7 @@
 /.history
 /.pnp
 .pnp.js
-
+.env
 # testing
 /coverage
 
