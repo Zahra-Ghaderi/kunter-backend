@@ -84,7 +84,6 @@ router.route('/Kservices').post((request,response)=>{
 })
 
 router.route('/Kservices/:KServicesID').put((request,response)=>{
-    console.log("TTTTTTTTTTTTTTTTTTTTTT")
     console.log(request.body)
     DBOperations.UpdateService(
         request.body.Srl_KService,
@@ -129,7 +128,10 @@ router.route('/Patients').post((request,response)=>{
         request.body.C_Person,
         request.body.Mobile,
         request.body.N_Person,
-        request.body.F_Person
+        request.body.F_Person,
+        request.body.City,
+        request.body.Home_Adress,
+        request.body.K_Person
         ).then(result => {
         //response = {a:1};
         response.send({msg : "ok"});
@@ -138,14 +140,16 @@ router.route('/Patients').post((request,response)=>{
 })
 
 router.route('/Patients/:PatientID').put((request,response)=>{
-    console.log("TTTTTTTTTTTTTTTTTTTTTT")
     console.log(request.body)
     DBOperations.UpdatePatient(
         request.body.Srl_Person,
         request.body.C_Person,
         request.body.Mobile,
         request.body.N_Person,
-        request.body.F_Person
+        request.body.F_Person,
+        request.body.City,
+        request.body.Home_Adress,
+        request.body.K_Person
         ).then(result => {
         //response = {a:1};
         response.send({msg : "ok"});
@@ -158,7 +162,7 @@ router.route('/a').get((request,response)=>{response.send('aaa');})
 router.route('/Docs').get((request,response)=>{
     DBOperations.getDocs().then(result => {
         response.send(result[0]);     
-    } )    
+    } )
 })
 router.route('/DocPayments').get((request,response)=>{
     DBOperations.getDocPayments().then(result => {

@@ -19,7 +19,7 @@ async function getPatients(){
         //console.log(1);
         let pool = await sql.connect(config);
         //console.log(2);
-        let PatientsList = await pool.request().query('select Srl_Person, C_Person, Mobile, N_Person, F_Person from T_Person_List');
+        let PatientsList = await pool.request().query('select Srl_Person, C_Person, Mobile, N_Person, F_Person, City, Home_Adress, K_Person from T_Person_List');
         //console.log(PatientsList.recordsets);
         return PatientsList.recordsets;
     }catch(error){
@@ -40,23 +40,25 @@ async function DelPatient(PatientsID){
     }
 }
 
-async function AddPatient(C_Person, Mobile, N_Person, F_Person){
-    console.log("AddPatient");
+async function AddPatient(C_Person, Mobile, N_Person, F_Person, City, Home_Adress, K_Person){
     try{
         let pool = await sql.connect(config);
         let AddToPatient = await pool.request()
         .input('C_Person', sql.Int, C_Person)
         .input('Mobile', sql.VarChar, Mobile)
         .input('N_Person', sql.VarChar, N_Person)
-        .input('F_Person', sql.VarChar, F_Person)      
-        .query('INSERT INTO T_Person_List(C_Person, Mobile, N_Person, F_Person) values(@C_Person, @Mobile, @N_Person, @F_Person)');
+        .input('F_Person', sql.VarChar, F_Person)   
+        .input('City', sql.VarChar, City)
+        .input('Home_Adress', sql.VarChar, Home_Adress)
+        .input('K_Person', sql.Int, K_Person)
+        .query('INSERT INTO T_Person_List(C_Person, Mobile, N_Person, F_Person, City, Home_Adress, K_Person) values(@C_Person, @Mobile, @N_Person, @F_Person, @City, @Home_Adress, @K_Person)');
         
     }catch(error){
         console.log(error);
     }
 }
 
-async function UpdatePatient(Srl_Person, C_Person, Mobile, N_Person, F_Person){
+async function UpdatePatient(Srl_Person, C_Person, Mobile, N_Person, F_Person, City, Home_Adress, K_Person){
     try{
         console.log('aaaaaaaaUpdatePatientaaaaaaaaa');
         let pool = await sql.connect(config);
@@ -66,7 +68,9 @@ async function UpdatePatient(Srl_Person, C_Person, Mobile, N_Person, F_Person){
         .input('Mobile', sql.VarChar, Mobile)
         .input('N_Person', sql.VarChar, N_Person)
         .input('F_Person', sql.Int, F_Person)
-       .query('UPDATE T_Person_List SET C_Person = @C_Person, Mobile = @Mobile, N_Person = @N_Person, F_Person = @F_Person  where  Srl_Person = @Srl_Person');
+        .input('City', sql.VarChar, City)
+        .input('Home_Adress', sql.VarChar, Home_Adress)
+       .query('UPDATE T_Person_List SET C_Person = @C_Person, Mobile = @Mobile, N_Person = @N_Person, F_Person = @F_Person, City = @City, Home_Adress = @Home_Adress, where  Srl_Person = @Srl_Person');
         return 1;
     }catch(error){
         console.log(error);
